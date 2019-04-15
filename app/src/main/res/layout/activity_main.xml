@@ -64,6 +64,7 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"/>

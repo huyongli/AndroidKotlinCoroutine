@@ -35,7 +35,6 @@ class MainPresenter: MainContract.Presenter, BasePresenter<MainContract.View>() 
     override fun syncWithContext() {
         presenterScope.launch {
             val time = System.currentTimeMillis()
-            Log.d(TAG, "launch thread: ${Thread.currentThread().name}")
             view.showLoadingView()
             try {
                 val ganks = Repository.querySyncWithContext()
@@ -43,8 +42,7 @@ class MainPresenter: MainContract.Presenter, BasePresenter<MainContract.View>() 
             } catch (e: Throwable) {
                 view.showLoadingErrorView()
             } finally {
-                Log.d(TAG, "finally thread: ${Thread.currentThread().name}")
-                Log.d(TAG, "${System.currentTimeMillis() - time}")
+                Log.d(TAG, "耗时：${System.currentTimeMillis() - time}")
             }
         }
     }
@@ -52,7 +50,6 @@ class MainPresenter: MainContract.Presenter, BasePresenter<MainContract.View>() 
     override fun syncNoneWithContext() {
         presenterScope.launch {
             val time = System.currentTimeMillis()
-            Log.d(TAG, "launch thread: ${Thread.currentThread().name}")
             view.showLoadingView()
             try {
                 val ganks = Repository.querySyncNoneWithContext()
@@ -60,8 +57,7 @@ class MainPresenter: MainContract.Presenter, BasePresenter<MainContract.View>() 
             } catch (e: Throwable) {
                 view.showLoadingErrorView()
             } finally {
-                Log.d(TAG, "finally thread: ${Thread.currentThread().name}")
-                Log.d(TAG, "${System.currentTimeMillis() - time}")
+                Log.d(TAG, "耗时：${System.currentTimeMillis() - time}")
             }
         }
     }
@@ -69,7 +65,6 @@ class MainPresenter: MainContract.Presenter, BasePresenter<MainContract.View>() 
     override fun asyncWithContextForAwait() {
         presenterScope.launch {
             val time = System.currentTimeMillis()
-            Log.d(TAG, "launch thread: ${Thread.currentThread().name}")
             view.showLoadingView()
             try {
                 val ganks = Repository.queryAsyncWithContextForAwait()
@@ -77,8 +72,7 @@ class MainPresenter: MainContract.Presenter, BasePresenter<MainContract.View>() 
             } catch (e: Throwable) {
                 view.showLoadingErrorView()
             } finally {
-                Log.d(TAG, "finally thread: ${Thread.currentThread().name}")
-                Log.d(TAG, "${System.currentTimeMillis() - time}")
+                Log.d(TAG, "耗时：${System.currentTimeMillis() - time}")
             }
         }
     }
@@ -86,7 +80,6 @@ class MainPresenter: MainContract.Presenter, BasePresenter<MainContract.View>() 
     override fun asyncWithContextForNoAwait() {
         presenterScope.launch {
             val time = System.currentTimeMillis()
-            Log.d(TAG, "launch thread: ${Thread.currentThread().name}")
             view.showLoadingView()
             try {
                 val ganks = Repository.queryAsyncWithContextForNoAwait()
@@ -94,8 +87,7 @@ class MainPresenter: MainContract.Presenter, BasePresenter<MainContract.View>() 
             } catch (e: Throwable) {
                 view.showLoadingErrorView()
             } finally {
-                Log.d(TAG, "finally thread: ${Thread.currentThread().name}")
-                Log.d(TAG, "${System.currentTimeMillis() - time}")
+                Log.d(TAG, "耗时：${System.currentTimeMillis() - time}")
             }
         }
     }
@@ -103,7 +95,6 @@ class MainPresenter: MainContract.Presenter, BasePresenter<MainContract.View>() 
     override fun adapterCoroutineQuery() {
         presenterScope.launch {
             val time = System.currentTimeMillis()
-            Log.d(TAG, "launch thread: ${Thread.currentThread().name}")
             view.showLoadingView()
             try {
                 val ganks = Repository.adapterCoroutineQuery()
@@ -111,7 +102,6 @@ class MainPresenter: MainContract.Presenter, BasePresenter<MainContract.View>() 
             } catch (e: Throwable) {
                 view.showLoadingErrorView()
             } finally {
-                Log.d(TAG, "finally thread: ${Thread.currentThread().name}")
                 Log.d(TAG, "耗时：${System.currentTimeMillis() - time}")
             }
         }
