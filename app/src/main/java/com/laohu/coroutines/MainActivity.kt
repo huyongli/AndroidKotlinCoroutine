@@ -150,7 +150,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter.dettachView()
+        presenter.detachView()
     }
 
     override fun onBackPressed() {

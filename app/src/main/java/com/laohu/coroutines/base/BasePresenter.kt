@@ -13,7 +13,7 @@ open class BasePresenter<V: MvpView> : MvpPresenter<V> {
         this.view = view
     }
 
-    override fun dettachView() {
+    override fun detachView() {
         presenterScope.cancel()
     }
 }

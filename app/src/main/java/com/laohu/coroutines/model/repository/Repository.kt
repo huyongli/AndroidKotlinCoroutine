@@ -14,7 +14,7 @@ object Repository {
      * 两个请求在子线程中顺序执行，非同时并发
      */
     suspend fun querySyncWithContext(): List<Gank> {
-        return withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.Main) {
             try {
                 val androidResult = ApiSource.instance.getAndroidGank().await()
 
@@ -56,7 +56,7 @@ object Repository {
      * 两个请求在子线程中并发执行
      */
     suspend fun queryAsyncWithContextForAwait(): List<Gank> {
-        return withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.Main) {
             try {
                 val androidDeferred = async {
                     val androidResult = ApiSource.instance.getAndroidGank().await()
@@ -87,7 +87,7 @@ object Repository {
      * 两个请求在子线程中并发执行
      */
     suspend fun queryAsyncWithContextForNoAwait(): List<Gank> {
-        return withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.Main) {
             try {
                 val androidDeferred = async {
                     val androidResult = ApiSource.instance.getAndroidGank().execute()
@@ -123,7 +123,7 @@ object Repository {
     }
 
     suspend fun adapterCoroutineQuery(): List<Gank> {
-        return withContext(Dispatchers.IO) {
+        return withContext(Dispatchers.Main) {
             try {
                 val androidDeferred = ApiSource.callAdapterInstance.getAndroidGank()
 
