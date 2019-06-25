@@ -159,6 +159,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         cancelBtn.setOnClickListener {
             presenter.detachView()
         }
+        buildNoView.text = "buildNo：${BuildConfig.BUILD_NO}"
     }
 
     override fun showLoadingView() {
