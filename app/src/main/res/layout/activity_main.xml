@@ -60,6 +60,26 @@
             android:textColor="@android:color/white"
             android:text="Adapter适配协程请求"/>
 
+    <Button
+            android:id="@+id/retrofitBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:text="Retrofit协程官方支持"/>
+
+    <Button
+            android:id="@+id/cancelBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:text="取消请求"/>
+
     <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"

@@ -1,8 +1,11 @@
 package com.laohu.coroutines.model
 
+import android.util.Log
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.laohu.coroutines.model.repository.TAG
 import com.laohu.coroutines.pojo.GankResult
 import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.suspendCancellableCoroutine
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,6 +30,12 @@ interface ApiService {
 
     @GET("data/Android/2/1")
     fun getAndroidGank(): Call<GankResult>
+
+    @GET("data/Android/2/1")
+    suspend fun getSuspendAndroidGank(): GankResult
+
+    @GET("data/iOS/2/1")
+    suspend fun getSuspendIOSGank(): GankResult
 }
 
 class ApiSource {
@@ -47,7 +56,12 @@ class ApiSource {
 }
 
 suspend fun <T> Call<T>.await(): T {
-    return suspendCoroutine {
+    return suspendCancellableCoroutine {
+        it.invokeOnCancellation {
+            Log.d(TAG, "request cancel")
+            it?.printStackTrace()
+            cancel()
+        }
         enqueue(object : Callback<T> {
             override fun onFailure(call: Call<T>, t: Throwable) {
                 it.resumeWithException(t)

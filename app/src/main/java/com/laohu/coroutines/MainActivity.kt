@@ -27,6 +27,7 @@ class MainContract {
         fun asyncWithContextForAwait()
         fun asyncWithContextForNoAwait()
         fun adapterCoroutineQuery()
+        fun retrofitCoroutine()
     }
 }
 
@@ -40,6 +41,7 @@ class MainPresenter: MainContract.Presenter, BasePresenter<MainContract.View>() 
                 val ganks = Repository.querySyncWithContext()
                 view.showLoadingSuccessView(ganks)
             } catch (e: Throwable) {
+                e.printStackTrace()
                 view.showLoadingErrorView()
             } finally {
                 Log.d(TAG, "耗时：${System.currentTimeMillis() - time}")
@@ -55,6 +57,7 @@ class MainPresenter: MainContract.Presenter, BasePresenter<MainContract.View>() 
                 val ganks = Repository.querySyncNoneWithContext()
                 view.showLoadingSuccessView(ganks)
             } catch (e: Throwable) {
+                e.printStackTrace()
                 view.showLoadingErrorView()
             } finally {
                 Log.d(TAG, "耗时：${System.currentTimeMillis() - time}")
@@ -70,6 +73,8 @@ class MainPresenter: MainContract.Presenter, BasePresenter<MainContract.View>() 
                 val ganks = Repository.queryAsyncWithContextForAwait()
                 view.showLoadingSuccessView(ganks)
             } catch (e: Throwable) {
+                e.printStackTrace()
+                Log.d(TAG, "error: ${e.message}")
                 view.showLoadingErrorView()
             } finally {
                 Log.d(TAG, "耗时：${System.currentTimeMillis() - time}")
@@ -85,6 +90,7 @@ class MainPresenter: MainContract.Presenter, BasePresenter<MainContract.View>() 
                 val ganks = Repository.queryAsyncWithContextForNoAwait()
                 view.showLoadingSuccessView(ganks)
             } catch (e: Throwable) {
+                e.printStackTrace()
                 view.showLoadingErrorView()
             } finally {
                 Log.d(TAG, "耗时：${System.currentTimeMillis() - time}")
@@ -100,6 +106,23 @@ class MainPresenter: MainContract.Presenter, BasePresenter<MainContract.View>() 
                 val ganks = Repository.adapterCoroutineQuery()
                 view.showLoadingSuccessView(ganks)
             } catch (e: Throwable) {
+                e.printStackTrace()
+                view.showLoadingErrorView()
+            } finally {
+                Log.d(TAG, "耗时：${System.currentTimeMillis() - time}")
+            }
+        }
+    }
+
+    override fun retrofitCoroutine() {
+        presenterScope.launch {
+            val time = System.currentTimeMillis()
+            view.showLoadingView()
+            try {
+                val ganks = Repository.retrofitSuspendQuery()
+                view.showLoadingSuccessView(ganks)
+            } catch (e: Throwable) {
+                e.printStackTrace()
                 view.showLoadingErrorView()
             } finally {
                 Log.d(TAG, "耗时：${System.currentTimeMillis() - time}")
@@ -130,6 +153,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         adapterBtn.setOnClickListener {
             presenter.adapterCoroutineQuery()
         }
+        retrofitBtn.setOnClickListener {
+            presenter.retrofitCoroutine()
+        }
+        cancelBtn.setOnClickListener {
+            presenter.detachView()
+        }
     }
 
     override fun showLoadingView() {
@@ -138,7 +167,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showLoadingSuccessView(granks: List<Gank>) {
         loadingBar.hideSelf()
-        textView.text = "请求结束"
+        textView.text = "请求结束，数据条数：${granks.size}"
         Toast.makeText(this, "加载成功", Toast.LENGTH_SHORT).show()
         Log.d(TAG, "请求结果：$granks")
     }

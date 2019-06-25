@@ -5,6 +5,7 @@ import com.laohu.coroutines.model.await
 import com.laohu.coroutines.pojo.Gank
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
 const val TAG = "TestCoroutine"
@@ -87,7 +88,7 @@ object Repository {
      * 两个请求在子线程中并发执行
      */
     suspend fun queryAsyncWithContextForNoAwait(): List<Gank> {
-        return withContext(Dispatchers.Main) {
+        return withContext(Dispatchers.IO) {
             try {
                 val androidDeferred = async {
                     val androidResult = ApiSource.instance.getAndroidGank().execute()
@@ -140,6 +141,21 @@ object Repository {
                 result
             } catch (e: Throwable) {
                 e.printStackTrace()
+                throw e
+            }
+        }
+    }
+
+    suspend fun retrofitSuspendQuery(): List<Gank> {
+        return withContext(Dispatchers.Main) {
+            try {
+                val androidResult = ApiSource.instance.getSuspendAndroidGank()
+                val iosResult = ApiSource.instance.getSuspendIOSGank()
+                mutableListOf<Gank>().apply {
+                    addAll(iosResult.results)
+                    addAll(androidResult.results)
+                }
+            } catch (e: Throwable) {
                 throw e
             }
         }
