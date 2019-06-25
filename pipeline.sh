@@ -1,0 +1,1 @@
+./gradlew assembleDebug -PbuildNo=${GO_PIPELINE_COUNTER}
