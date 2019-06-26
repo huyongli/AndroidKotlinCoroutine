@@ -89,15 +89,6 @@
             android:background="@color/colorPrimary"
             android:textColor="@android:color/white"/>
 
-    <TextView
-            android:id="@+id/buildNoView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/colorPrimary"
-            android:textColor="@android:color/white"/>
-
     <ProgressBar
             android:id="@+id/loadingBar"
             android:layout_width="wrap_content"

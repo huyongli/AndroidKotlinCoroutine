@@ -27,17 +27,6 @@ android {
     }
 }
 
-afterEvaluate {
-    android.applicationVariants.each { variant ->
-        if (project.hasProperty("buildNo")) {
-            def buildNo = project.property("buildNo")
-            variant.buildConfigField "String", "BUILD_NO", "\"${buildNo}\""
-        } else {
-            variant.buildConfigField "String", "BUILD_NO", "\"none\""
-        }
-    }
-}
-
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
